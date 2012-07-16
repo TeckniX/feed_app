@@ -1,9 +1,5 @@
-FeedApp::Application.routes.draw do
-  get "users/new"
-
-  get "users/add"
-
-  get "users/edit"
+FeedApp::Application.routes.draw do  
+  resources :users
 
   root to: 'static_pages#home'
   
