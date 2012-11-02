@@ -15,7 +15,7 @@ describe "User pages" do
     before do
       sign_in user
       FactoryGirl.create(:user, name: "Bob", email: "bob@example.com")
-      FactoryGirl.create(:user, name: "Ben", email: "ben@example.com")
+      FactoryGirl.create(:user, name: "Fred", email: "Fred@example.com")
       visit users_path
     end
 
@@ -53,6 +53,15 @@ describe "User pages" do
         it { should_not have_link('delete', href: user_path(admin)) }
       end
     end
+
+    describe "accessible attributes" do
+      it "should not allow access to admin" do
+        expect do
+          User.new(admin: true)
+        end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
+      end    
+    end
+
   end
 
   describe "signup page" do
@@ -99,7 +108,7 @@ describe "User pages" do
         fill_in "Name",         with: "Example User"
         fill_in "Email",        with: "user@example.com"
         fill_in "Password",     with: "foobar"
-        fill_in "Confirmation", with: "foobar"
+        fill_in "Confirm Password", with: "foobar"
       end
 
       it "should create a user" do
