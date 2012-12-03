@@ -23,6 +23,15 @@ module SessionsHelper
   def current_user?(user)
     user == current_user
   end
+
+  def signed_in_user
+    # redirect_to signin_path, notice: "Please sign in." unless signed_in?
+    unless signed_in?
+      store_location
+      # _path is path portion only - _url is full url with http protocol
+      redirect_to signin_path, notice: "Please sign in."
+    end
+  end
   
   def sign_out
     self.current_user = nil
