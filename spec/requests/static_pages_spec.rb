@@ -30,6 +30,7 @@ describe "Static pages" do
         click_link "Feed App"
         page.should have_selector 'title', text: full_title('')
     end
+
     describe "for signed-in users" do
       let(:user) { FactoryGirl.create(:user) }
       before do
@@ -56,6 +57,15 @@ describe "Static pages" do
           page.should have_selector("div.pagination")
         end
       end  
+
+      describe "for other users" do
+        let(:user2) { FactoryGirl.create(:user, name: "Fred", email: "Fred@example.com") }
+        before do
+          FactoryGirl.create(:micropost, user: user2, content: "Lorem ipsum")
+          visit user_path(user2)
+        end
+        it { should_not have_link('delete') }
+      end
     end
   end
 
