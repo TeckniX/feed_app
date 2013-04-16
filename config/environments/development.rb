@@ -34,4 +34,7 @@ FeedApp::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  # Disable the threadsafe
+  config.threadsafe = false
 end
